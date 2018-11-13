@@ -1,0 +1,29 @@
+{
+  "name": "tankgame_api",
+  "version": "1.0.0",
+  "description": "api for socketio tank game",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xianchen97/tankgame_api.git"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "Xian Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xianchen97/tankgame_api/issues"
+  },
+  "homepage": "https://github.com/xianchen97/tankgame_api#readme"
+}
