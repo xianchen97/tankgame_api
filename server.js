@@ -81,7 +81,7 @@ router
   })
 
   .delete(function(req, res) {
-    tank.remove({
+    Tank.findOneAndDelete({
         userID: req.params.userID
     }, function(err, tank) {
         if (err)
