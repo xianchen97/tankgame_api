@@ -8,7 +8,7 @@ let Tank = require("./models/tank");
 app.use(bodyParser.urlencoded({ extended: true })); //Allows us to retrieve pata from POST requests
 app.use(bodyParser.json());
 
-mongoose.connect("ASTRING");
+mongoose.connect("mongodb://admin:Lacrimus1!@ds039778.mlab.com:39778/tankgame");
 
 let port = process.env.PORT || 8080;
 
@@ -38,11 +38,11 @@ router
     var tank = new Tank(); // create a new instance of the Tank
     tank.userID = req.body.userID;
     tank.userScore = req.body.userScore;
-    tank.badgeImgUrl = req.body.userScore;
+    tank.badgeImgUrl = req.body.badgeImgUrl;
     tank.save(function(err) {
       if (err) res.send(err);
 
-      res.json({ message: "A tank has been created!" });
+      res.json(tank + "\n has been created!");
     });
   })
 
@@ -75,7 +75,7 @@ router
       tank.save(function(err) {
         if (err)
          res.send(err);
-        res.json({ message: "Tank updated!" });
+        res.json({ message: "Tank updated!" + "\n" + tank });
       });
     });
   })
@@ -87,7 +87,7 @@ router
         if (err)
             res.send(err);
 
-        res.json({ message: 'Successfully deleted' });
+        res.json({message:  "Deleted!" + tank});
     });
 });
 // START THE SERVER
