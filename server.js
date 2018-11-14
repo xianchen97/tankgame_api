@@ -8,7 +8,7 @@ let Tank = require("./models/tank");
 app.use(bodyParser.urlencoded({ extended: true })); //Allows us to retrieve pata from POST requests
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://admin:Lacrimus1!@ds039778.mlab.com:39778/tankgame");
+mongoose.connect("ASTRING");
 
 let port = process.env.PORT || 8080;
 
