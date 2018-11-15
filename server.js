@@ -1,24 +1,27 @@
-// BASE SETUP
-// =============================================================================
+/**
+=============================================================================
+Variable set up
+=============================================================================
+*/
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
 let mongoose = require("mongoose");
 let Tank = require("./models/tank");
+let port = process.env.PORT || 8080;
+
 app.use(bodyParser.urlencoded({ extended: true })); //Allows us to retrieve pata from POST requests
 app.use(bodyParser.json());
 
 mongoose.connect("mongodb://admin:Lacrimus1!@ds039778.mlab.com:39778/tankgame");
 
-let port = process.env.PORT || 8080;
-
-// ROUTES FOR OUR API
-// =============================================================================
+/**
+ * API ROUTING
+ */
 let router = express.Router();
 
 //Handle requests for middle ware
 router.use(function(req, res, next) {
-  // do logging
   console.log("Received requests!");
   next(); // Continue to next route
 });
@@ -28,12 +31,19 @@ router.get("/", function(req, res) {
   res.json({ message: "API is working!" });
 });
 
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
+/**
+ * ======================================================================
+ * ROUTES
+ * ======================================================================
+ */
+
+ //Prefixed with /api
 app.use("/api", router);
 
-router
-  .route("/tanks")
+//Prefixed with /api/tanks 
+router.route("/tanks")
+
+  //POST method 
   .post(function(req, res) {
     var tank = new Tank(); // create a new instance of the Tank
     tank.userID = req.body.userID;
@@ -41,11 +51,11 @@ router
     tank.badgeImgUrl = req.body.badgeImgUrl;
     tank.save(function(err) {
       if (err) res.send(err);
-
       res.json(tank + "\n has been created!");
     });
   })
-
+  
+  //GET method
   .get(function(req, res) {
     Tank.find(function(err, tanks) {
       if (err) res.send(err);
@@ -53,8 +63,8 @@ router
     });
   });
 
-router
-  .route("/tanks/:userID")
+//Prefixed with /api/tanks/:userID
+router.route("/tanks/:userID")
 
   .get(function(req, res) {
     Tank.findById(req.params.userID, function(err, tank) {
@@ -63,6 +73,7 @@ router
     });
   })
 
+  //PUT request, updates tank based on ID
   .put(function(req, res) {
     Tank.findOne({userID: req.params.userID}, function(err, tank) {
       if (err){
@@ -80,6 +91,7 @@ router
     });
   })
 
+  //Delete request, deletes tank based on ID
   .delete(function(req, res) {
     Tank.findOneAndDelete({
         userID: req.params.userID
@@ -90,7 +102,11 @@ router
         res.json({message:  "Deleted!" + tank});
     });
 });
-// START THE SERVER
-// =============================================================================
+
+/**
+ * =================================================================
+ * Server
+ * =================================================================
+ */
 app.listen(port);
 console.log("Listening on port: " + port);
