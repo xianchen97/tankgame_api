@@ -49,15 +49,16 @@ app.use("/api", router);
  * =======================================================================
  */
 router.route("/highscores")
-  .post(function(req,res){
-    var highscore = new Highscore();
-    highscore.topScore = req.body.topScore;
-    highscore.topUser = req.body.topUser;
-    highscore.save(function(err) {
-      if (err) res.send(err);
-      res.json(highscore + "\n has been created!");
-    });
-  })
+  // .post(function(req,res){
+  //   var highscore = new Highscore();
+  //   highscore.topScore = req.body.topScore;
+  //   highscore.topUser = req.body.topUser;
+  //   highscore.save(function(err) {
+  //     if (err) res.send(err);
+  //     res.json(highscore + "\n has been created!");
+  //   });
+  // })
+
   .get(function(req, res){
     Highscore.find(function(err, highscore){
       if (err) res.send(err);
@@ -66,17 +67,17 @@ router.route("/highscores")
   })
 
   .put(function(req, res) {
-    Highscore.findOne({topUser: req.params.userID}, function(err, highscore) {
+    Highscore.findOne({topUser: req.body.topUser}, function(err, highscore) {
       if (err){
         res.send(err);
       }
       highscore.topScore = req.body.topScore;
       highscore.topUser = req.body.topUser;
 
-      Highscore.save(function(err) {
+      highscore.save(function(err) {
         if (err)
          res.send(err);
-        res.json({ message: "Tank updated!" + "\n" + highscore });
+        res.json({ message: "Highscore updated!" + "\n" + highscore });
       });
     });
   })
