@@ -67,7 +67,7 @@ router.route("/highscores")
   })
 
   .put(function(req, res) {
-    Highscore.findOne({topUser: req.body.topUser}, function(err, highscore) {
+    Highscore.find( function(err, highscore) {
       if (err){
         res.send(err);
       }
