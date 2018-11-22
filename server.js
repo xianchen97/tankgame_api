@@ -67,20 +67,21 @@ router.route("/highscores")
   })
 
   .put(function(req, res) {
-    Highscore.find( function(err, highscore) {
+    Highscore.find(function(err, highscore) {
       if (err){
         res.send(err);
       }
-      highscore.topScore = req.body.topScore;
-      highscore.topUser = req.body.topUser;
 
-      highscore.save(function(err) {
+      highscore[0].topScore = req.body.topScore;
+      highscore[0].topUser = req.body.topUser;
+
+      highscore[0].save(function(err) {
         if (err)
          res.send(err);
         res.json({ message: "Highscore updated!" + "\n" + highscore });
       });
     });
-  })
+  });
 
 
  /**
